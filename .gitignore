@@ -1,0 +1,70 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+*.eggs/
+*.whl
+
+# Virtual Environments
+venv/
+env/
+.venv/
+.env/
+
+# FastAPI & Alembic
+alembic/versions/  # Alembic migration scripts (version files)
+.env               # Environment variables (e.g., secrets, configurations)
+*.sqlite           # SQLite database files (if using SQLite for local dev)
+instance/          # Flask-like instance folder (if applicable)
+
+# Logs
+*.log
+*.out
+*.err
+logs/
+*.gz
+
+# OS generated files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Editor Configurations
+.vscode/
+.idea/
+*.code-workspace
+
+# Build artifacts
+build/
+dist/
+*.manifest
+*.spec
+
+# Coverage reports
+htmlcov/
+.tox/
+.coverage
+coverage.xml
+.cache
+.pytest_cache/
+
+# Node.js (if front-end exists or for dependencies)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Other dependencies
+*.lock
+*.bak
+*.tmp
+*.backup
+*.old

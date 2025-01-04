@@ -5,9 +5,10 @@ from app.core.db_config import get_async_db_session
 from fastapi import Depends
 from app.models.user_model import User
 from sqlalchemy.future import select
-from app.utils import CustomException
+from app.utils import CustomException, generate_otp, render_email_template, send_email
 from app.core.auth_security import  create_access_token, hash_password, verify_password
-from fastapi.security import OAuth2PasswordRequestForm
+from app.services.redis_service import RedisService
+import aioredis
 
 class UserService:
     
@@ -82,3 +83,23 @@ class UserService:
             )
 
         return user
+    
+    @staticmethod
+    async def verify_user(verify_data:user_schema.VerifyUserSchema,
+            redis:aioredis.Redis):
+        is_correct = await RedisService.verify_otp(**verify_data.model_dump(), redis=redis)
+        if not is_correct:
+            raise CustomException(message="Invalid otp", status_code=400)
+        return {'message': 'Verified otp successfully'}
+    
+    @staticmethod
+    async def send_otp(email:str, redis: aioredis.Redis):
+        otp = await generate_otp()
+        await RedisService.set_otp(email, otp, redis=redis)
+
+        # Send a otp in email
+        body = await render_email_template('verify_account.html', 
+                        email=email, otp=otp)
+        await send_email(email, 'Verify Your Account', body)
+
+        return {'message': "Otp send to registered email successfully"}

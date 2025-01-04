@@ -11,7 +11,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(255), unique=True)
     password: Mapped[str] = mapped_column(String(255))
     role: Mapped[str] = mapped_column(Enum(UserRoleEnum), nullable=True)
-    is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=True)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=False, nullable=True)
 
     def __repr__(self):
         return f"{self.username}-{self.email}-{self.role}-{self.is_active}"

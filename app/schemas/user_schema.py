@@ -22,3 +22,7 @@ class UserDetailSchema(BaseModel):
     email:str
     username:str
     role: UserRoleEnum
+
+class VerifyUserSchema(BaseModel):
+    email:str
+    otp:str

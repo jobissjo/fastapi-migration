@@ -68,3 +68,4 @@ docker-compose.override.yml
 *.tmp
 *.backup
 *.old
+.env

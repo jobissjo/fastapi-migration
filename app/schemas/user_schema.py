@@ -6,6 +6,10 @@ class LoginSchema(BaseModel):
     email:str
     password:str
 
+class LoginUsernameSchema(BaseModel):
+    username:str
+    password:str
+
 class RegisterSchema(LoginSchema):
     username:str
     role: UserRoleEnum = Field(default=UserRoleEnum.USER)

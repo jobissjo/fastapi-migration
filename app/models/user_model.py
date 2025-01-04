@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import String, Integer, Boolean
-from app.db_config import Base
+from app.core.db_config import Base
 from app.schemas.common_schema import UserRoleEnum
 from sqlalchemy import Enum
 

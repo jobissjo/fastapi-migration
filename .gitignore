@@ -69,3 +69,5 @@ docker-compose.override.yml
 *.backup
 *.old
 .env
+
+__delete_db_data.py

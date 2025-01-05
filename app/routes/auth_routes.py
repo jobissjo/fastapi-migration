@@ -8,7 +8,7 @@ from app.services.user_service import UserService
 from app.utils import handle_exception
 from app.models.user_model import User
 from app.core.auth_security import verify_token_get_user
-import aioredis
+import redis.asyncio as redis
 from app.core.redis_config import get_redis_client
 
 
@@ -16,21 +16,22 @@ from app.core.redis_config import get_redis_client
 auth_router = APIRouter(prefix='/auth', tags=['Auth'])
 
 
-@auth_router.post('/register', response_model=user_schema.UserDetailSchema)
+@auth_router.post('/register')
 @handle_exception
 async def register(user_data:user_schema.RegisterSchema,
         db: Annotated[AsyncSession, Depends(get_async_db_session)],
-        redis: aioredis.Redis = Depends(get_redis_client)):
+        redis: redis.Redis = Depends(get_redis_client)):
     
     user = await UserService.register_user(user_data, db)
     
     return await UserService.send_otp(user.email, redis)
 
-@auth_router.get('/verify_user')
+@auth_router.post('/verify_user')
 @handle_exception
 async def verify_user(body:user_schema.VerifyUserSchema,
-            redis:aioredis.Redis = Depends(get_redis_client)):
-    return UserService.verify_user(body, redis)
+            db: Annotated[AsyncSession, Depends(get_async_db_session)],
+            redis:redis.Redis = Depends(get_redis_client)):
+    return await UserService.verify_user(body, db, redis)
 
 @auth_router.post('/login')
 @handle_exception

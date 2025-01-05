@@ -51,3 +51,7 @@ EMAIL_HOST_PASSWORD = get_env_var("EMAIL_HOST_PASSWORD")
 REDIS_URL = get_env_var("REDIS_URL")
 EXPIRE_OTP_SECONDS = get_env_var("EXPIRE_OTP_SECONDS")
 
+
+# LOGS CONFIGURATION
+DATABASE_LOG = bool(int(get_env_var("DATABASE_LOG", 0)))
+CUSTOM_LOG = bool(int(get_env_var("CUSTOM_LOG", 1)))

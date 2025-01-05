@@ -22,6 +22,7 @@ class UserDetailSchema(BaseModel):
     email:str
     username:str
     role: UserRoleEnum
+    is_active:bool
 
 class VerifyUserSchema(BaseModel):
     email:str
